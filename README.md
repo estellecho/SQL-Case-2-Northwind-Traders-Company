@@ -13,8 +13,6 @@
   +  **Customer Insights**: Assess behaviors, identify high-value clients, and target inactive regions.
   +  **Order and Shipping Analysis**: Optimize logistics by examining locations, shipping partners, and freight costs.
   +  **Product and Inventory Management**: Refine strategies through stock evaluation, pricing, and reorder priorities.
-  
-<br>
 
 ### 2. Case Questions
 
