@@ -5,7 +5,6 @@
 **1) Background**
 
   +  Northwind Traders is a global food import and export company. The database is central to its operations, recording all sales transactions with customers and purchase transactions with suppliers. As a Data Scientist, I am tasked with leveraging this database to address critical business questions and provide actionable insights.
-<br>
 
 **2) Objective**
 
