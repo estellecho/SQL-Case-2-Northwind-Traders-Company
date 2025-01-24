@@ -1,16 +1,9 @@
 ---[1] Employee Analysis
 --1. Find employees hired before January 1, 1994, sorted from newest to oldest hire.
-SELECT 
-    EmployeeID, 
-    FirstName, 
-    LastName, 
-    HireDate
-FROM 
-    Employees
-WHERE 
-    HireDate < '1994-01-01'
-ORDER BY 
-    HireDate DESC;
+SELECT EmployeeID, FirstName, LastName, HireDate
+FROM Employees
+WHERE HireDate < '1994-01-01'
+ORDER BY HireDate DESC;
 	
 --2. Determine employees who processed over $100,000 in total value and show their 10 most recent orders.
 -- Step 1: Find employees who processed over $100,000 in total sales
