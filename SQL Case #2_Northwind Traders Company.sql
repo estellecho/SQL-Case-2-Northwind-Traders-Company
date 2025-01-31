@@ -7,9 +7,7 @@ ORDER BY HireDate DESC;
 	
 --2. Determine employees who processed over $100,000 in total value and show their 10 most recent orders.
 SELECT 
-    e.EmployeeID,
-    e.LastName, 
-    e.FirstName, 
+    e.EmployeeID, e.LastName, e.FirstName, 
     ROUND(CAST(SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS NUMERIC), 2) AS TotalSales
 FROM Orders o
 JOIN OrderDetails od ON o.OrderID = od.OrderID
