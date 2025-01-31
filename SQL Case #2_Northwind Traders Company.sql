@@ -6,24 +6,35 @@ WHERE HireDate < '1994-01-01'
 ORDER BY HireDate DESC;
 	
 --2. Determine employees who processed over $100,000 in total value and show their 10 most recent orders.
--- Step 1: Find employees who processed over $100,000 in total sales
-WITH EmployeeSales AS (
-    SELECT e.EmployeeID, e.FirstName, e.LastName, SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS TotalSales
-    FROM Employees AS e
-    JOIN Orders AS o ON e.EmployeeID = o.EmployeeID
-    JOIN OrderDetails AS od ON o.OrderID = od.OrderID
-    GROUP BY e.EmployeeID, e.FirstName, e.LastName
-    HAVING SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) > 100000)
-	
--- Step 2: Get 10 most recent orders for qualifying employees
-SELECT e.FirstName, e.LastName, o.OrderID, o.OrderDate, 
-    ROUND(CAST(SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS NUMERIC), 2) AS OrderValue
-FROM EmployeeSales AS es
-JOIN Employees AS e ON es.EmployeeID = e.EmployeeID
-JOIN Orders AS o ON e.EmployeeID = o.EmployeeID
-JOIN OrderDetails AS od ON o.OrderID = od.OrderID
-GROUP BY e.EmployeeID, e.FirstName, e.LastName, o.OrderID, o.OrderDate
-ORDER BY e.EmployeeID, o.OrderDate DESC
+WITH EmployeeTotalSales AS (
+    SELECT
+        e.employee_id,
+        e.first_name,
+        e.last_name,
+        SUM(o.order_value) AS total_sales
+    FROM
+        employees e
+        JOIN orders o ON e.employee_id = o.employee_id
+    GROUP BY
+        e.employee_id,
+        e.first_name,
+        e.last_name
+    HAVING
+        SUM(o.order_value) > 100000
+)
+SELECT
+    e.employee_id,
+    e.first_name,
+    e.last_name,
+    o.order_id,
+    o.order_date,
+    o.order_value
+FROM
+    EmployeeTotalSales e
+    JOIN orders o ON e.employee_id = o.employee_id
+ORDER BY
+    e.employee_id,
+    o.order_date DESC
 LIMIT 10;
 
 --3. Classify employees by the number of orders processed: High (≥75), Mid (50-74), Low (<50).
