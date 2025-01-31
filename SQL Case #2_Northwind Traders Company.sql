@@ -5,36 +5,14 @@ FROM Employees
 WHERE HireDate < '1994-01-01'
 ORDER BY HireDate DESC;
 	
---2. Determine employees who processed over $100,000 in total value and show their 10 most recent orders.
-WITH EmployeeTotalSales AS (
-    SELECT
-        e.employee_id,
-        e.first_name,
-        e.last_name,
-        SUM(o.order_value) AS total_sales
-    FROM
-        employees e
-        JOIN orders o ON e.employee_id = o.employee_id
-    GROUP BY
-        e.employee_id,
-        e.first_name,
-        e.last_name
-    HAVING
-        SUM(o.order_value) > 100000
-)
-SELECT
-    e.employee_id,
-    e.first_name,
-    e.last_name,
-    o.order_id,
-    o.order_date,
-    o.order_value
-FROM
-    EmployeeTotalSales e
-    JOIN orders o ON e.employee_id = o.employee_id
-ORDER BY
-    e.employee_id,
-    o.order_date DESC
+--2. Determine employees who processed over $100,000 in total value.
+SELECT e.EmployeeID, e.LastName, e.FirstName,
+       ROUND(CAST(SUM(d.UnitPrice * d.Quantity * (1 - d.Discount)) AS NUMERIC), 2) AS TotalSales
+FROM Employees AS e
+JOIN Orders AS o ON e.EmployeeID = o.EmployeeID
+JOIN OrderDetails AS d ON o.OrderID = d.OrderID
+GROUP BY e.EmployeeID, e.LastName, e.FirstName
+HAVING SUM(d.UnitPrice * d.Quantity * (1 - d.Discount)) > 100000
 LIMIT 10;
 
 --3. Classify employees by the number of orders processed: High (≥75), Mid (50-74), Low (<50).
