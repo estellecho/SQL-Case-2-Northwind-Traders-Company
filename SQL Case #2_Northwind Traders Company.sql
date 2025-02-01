@@ -35,7 +35,7 @@ ORDER BY OrdersProcessed DESC;
 SELECT 
     c.CustomerID, 
     c.ContactName
-    ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount))::NUMERIC, 2) AS TotalOrderValue
+    ROUND(CAST(SUM(od.UnitPrice * od.Quantity * (1 - od.Discount)) AS NUMERIC), 2) AS TotalOrderValue
 FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
 JOIN OrderDetails od ON o.OrderID = od.OrderID
