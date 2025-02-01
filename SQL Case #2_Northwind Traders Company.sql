@@ -40,7 +40,7 @@ FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
 JOIN OrderDetails od ON o.OrderID = od.OrderID
 WHERE EXTRACT(YEAR FROM o.OrderDate)=1996
-GROUP BY c.CustomerID, c.CompanyName
+GROUP BY c.CustomerID, c.ContactName
 HAVING SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) >= 10000
 ORDER BY TotalOrderValue DESC;
 
