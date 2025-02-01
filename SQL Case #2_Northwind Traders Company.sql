@@ -34,7 +34,7 @@ ORDER BY OrdersProcessed DESC;
 --4. Find high-value customers who made orders worth $10,000 or more in 1996.
 SELECT 
     c.CustomerID, 
-    c.CompanyName AS CustomerName, 
+    c.ContactName
     ROUND(SUM(od.Quantity * od.UnitPrice * (1 - od.Discount))::NUMERIC, 2) AS TotalOrderValue
 FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
