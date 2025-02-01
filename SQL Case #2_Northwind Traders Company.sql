@@ -39,7 +39,7 @@ SELECT
 FROM Customers c
 JOIN Orders o ON c.CustomerID = o.CustomerID
 JOIN OrderDetails od ON o.OrderID = od.OrderID
-WHERE o.OrderDate BETWEEN '1996-01-01' AND '1996-12-31'
+WHERE EXTRACT(YEAR FROM o.OrderDate)=1996
 GROUP BY c.CustomerID, c.CompanyName
 HAVING SUM(od.Quantity * od.UnitPrice * (1 - od.Discount)) >= 10000
 ORDER BY TotalOrderValue DESC;
